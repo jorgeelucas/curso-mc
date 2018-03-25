@@ -8,19 +8,29 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.nelioalves.cursomc.domain.Categoria;
+import com.nelioalves.cursomc.domain.Cidade;
+import com.nelioalves.cursomc.domain.Estado;
 import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.domain.builder.ProdutoBuilder;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
+import com.nelioalves.cursomc.repositories.CidadeRepository;
+import com.nelioalves.cursomc.repositories.EstadoRepository;
 import com.nelioalves.cursomc.repositories.ProdutoRepository;
 
 @SpringBootApplication
 public class CursomvApplication implements CommandLineRunner {
 
 	@Autowired
-	private CategoriaRepository repo;
+	private CategoriaRepository categoriaRepository;
 	
 	@Autowired
-	private ProdutoRepository prod;
+	private ProdutoRepository produtoRepository;
+	
+	@Autowired
+	private CidadeRepository cidadeRepository;
+	
+	@Autowired
+	private EstadoRepository estadoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomvApplication.class, args);
@@ -54,7 +64,20 @@ public class CursomvApplication implements CommandLineRunner {
 		
 		escritorio.setProdutos(Arrays.asList(impressora));
 		
-		repo.saveAll(Arrays.asList(informatica, escritorio));
-		prod.saveAll(Arrays.asList(computador, impressora, mouse));
+		categoriaRepository.saveAll(Arrays.asList(informatica, escritorio));
+		produtoRepository.saveAll(Arrays.asList(computador, impressora, mouse));
+		
+		Estado minas = new Estado("Minas Gerais");
+		Estado spEstado = new Estado("São Paulo");
+		
+		Cidade uberlandia = new Cidade("Uberlandia", minas);
+		Cidade spCidade = new Cidade("São Paulo", spEstado);
+		Cidade campinas = new Cidade("Campinas", spEstado);
+		
+		minas.getCidades().addAll(Arrays.asList(uberlandia));
+		spEstado.getCidades().addAll(Arrays.asList(spCidade, campinas));
+		
+		estadoRepository.saveAll(Arrays.asList(minas, spEstado));
+		cidadeRepository.saveAll(Arrays.asList(uberlandia, spCidade, campinas));
 	}
 }
