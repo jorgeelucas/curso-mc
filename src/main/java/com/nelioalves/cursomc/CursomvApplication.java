@@ -1,5 +1,7 @@
 package com.nelioalves.cursomc;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +14,20 @@ import com.nelioalves.cursomc.domain.Cidade;
 import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.domain.Endereco;
 import com.nelioalves.cursomc.domain.Estado;
+import com.nelioalves.cursomc.domain.Pagamento;
 import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.domain.builder.ProdutoBuilder;
+import com.nelioalves.cursomc.enums.EstadoPagamento;
 import com.nelioalves.cursomc.enums.TipoCliente;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
 import com.nelioalves.cursomc.repositories.CidadeRepository;
 import com.nelioalves.cursomc.repositories.ClienteRepository;
 import com.nelioalves.cursomc.repositories.EnderecoRepository;
 import com.nelioalves.cursomc.repositories.EstadoRepository;
+import com.nelioalves.cursomc.repositories.PagamentoRepository;
+import com.nelioalves.cursomc.repositories.PedidoRepository;
 import com.nelioalves.cursomc.repositories.ProdutoRepository;
+import com.nelioalves.cursomc.resources.Pedido;
 
 @SpringBootApplication
 public class CursomvApplication implements CommandLineRunner {
@@ -43,6 +50,12 @@ public class CursomvApplication implements CommandLineRunner {
 	@Autowired
 	private EnderecoRepository enderecoRepository;
 	
+	@Autowired
+	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomvApplication.class, args);
 	}
@@ -52,7 +65,7 @@ public class CursomvApplication implements CommandLineRunner {
 		cargaInicial();
 	}
 	
-	public void cargaInicial() {
+	public void cargaInicial() throws ParseException {
 		Categoria informatica = new Categoria(null, "Informática");
 		Categoria escritorio = new Categoria(null, "Escritório");
 		
@@ -101,6 +114,20 @@ public class CursomvApplication implements CommandLineRunner {
 		
 		clienteRepository.saveAll(Arrays.asList(mariaSilva));
 		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		
+		
+		Pedido pedido1 = new Pedido(sdf.parse("30/09/2017 10:32"), mariaSilva, endereco1);
+		
+		Pedido pedido2 = new Pedido(sdf.parse("10/10/2017 19:35"), mariaSilva, endereco1);
+		
+		Pagamento pagamento1 = new Pagamento(EstadoPagamento.QUITADO.getCodigo(), pedido1);
+		Pagamento pagamento2 = new Pagamento(EstadoPagamento.PENDENTE.getCodigo(), pedido2);
+		
+		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
+		pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
+		
 		
 	}
 }

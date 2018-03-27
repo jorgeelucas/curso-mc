@@ -2,6 +2,7 @@ package com.nelioalves.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nelioalves.cursomc.enums.TipoCliente;
+import com.nelioalves.cursomc.resources.Pedido;
 
 @Entity
 public class Cliente implements Serializable {
@@ -35,6 +37,8 @@ public class Cliente implements Serializable {
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	public Cliente() {
 	}
@@ -100,6 +104,18 @@ public class Cliente implements Serializable {
 
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
+	}
+
+	public List<Pedido> getPedidos() {
+		return Collections.unmodifiableList(pedidos);
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+	
+	public void addAllPedidos(List<Pedido> pedidos) {
+		this.pedidos.addAll(pedidos);
 	}
 
 	@Override
