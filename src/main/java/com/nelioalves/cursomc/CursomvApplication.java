@@ -14,7 +14,10 @@ import com.nelioalves.cursomc.domain.Cidade;
 import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.domain.Endereco;
 import com.nelioalves.cursomc.domain.Estado;
+import com.nelioalves.cursomc.domain.ItemPedido;
 import com.nelioalves.cursomc.domain.Pagamento;
+import com.nelioalves.cursomc.domain.PagamentoComBoleto;
+import com.nelioalves.cursomc.domain.PagamentoComCartao;
 import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.domain.builder.ProdutoBuilder;
 import com.nelioalves.cursomc.enums.EstadoPagamento;
@@ -24,6 +27,7 @@ import com.nelioalves.cursomc.repositories.CidadeRepository;
 import com.nelioalves.cursomc.repositories.ClienteRepository;
 import com.nelioalves.cursomc.repositories.EnderecoRepository;
 import com.nelioalves.cursomc.repositories.EstadoRepository;
+import com.nelioalves.cursomc.repositories.ItemPedidoRepository;
 import com.nelioalves.cursomc.repositories.PagamentoRepository;
 import com.nelioalves.cursomc.repositories.PedidoRepository;
 import com.nelioalves.cursomc.repositories.ProdutoRepository;
@@ -55,6 +59,9 @@ public class CursomvApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomvApplication.class, args);
@@ -122,12 +129,29 @@ public class CursomvApplication implements CommandLineRunner {
 		
 		Pedido pedido2 = new Pedido(sdf.parse("10/10/2017 19:35"), mariaSilva, endereco1);
 		
-		Pagamento pagamento1 = new Pagamento(EstadoPagamento.QUITADO.getCodigo(), pedido1);
-		Pagamento pagamento2 = new Pagamento(EstadoPagamento.PENDENTE.getCodigo(), pedido2);
+		Pagamento pagamento1 = new PagamentoComCartao(EstadoPagamento.QUITADO, pedido1, 6);
+		pedido1.setPagamento(pagamento1);
+		
+		Pagamento pagamento2 = new PagamentoComBoleto(EstadoPagamento.PENDENTE, pedido2, sdf.parse("20/10/2017 00:00"), null);
+		pedido2.setPagamento(pagamento2);
+		
+		mariaSilva.addAllPedidos(Arrays.asList(pedido1, pedido2));
 		
 		pedidoRepository.saveAll(Arrays.asList(pedido1, pedido2));
 		pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2));
 		
+		ItemPedido ip1 = new ItemPedido(pedido1, computador, 0.00, 1, 2000.0);
+		ItemPedido ip2 = new ItemPedido(pedido1, mouse, 0.00, 2, 80.0);
+		ItemPedido ip3 = new ItemPedido(pedido2, impressora, 100.0, 1, 800.00);
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2, ip3));
+		
+		pedido1.addAllItens(ip1,ip2);
+		pedido2.addAllItens(ip3);
+		
+		computador.addAllItens(ip1);
+		mouse.addAllItens(ip2);
+		impressora.addAllItens(ip3);
 		
 	}
 }

@@ -2,6 +2,7 @@ package com.nelioalves.cursomc.domain;
 
 import javax.persistence.Entity;
 
+import com.nelioalves.cursomc.enums.EstadoPagamento;
 import com.nelioalves.cursomc.resources.Pedido;
 
 @Entity
@@ -13,7 +14,7 @@ public class PagamentoComCartao extends Pagamento {
 	public PagamentoComCartao() {
 	}
 
-	public PagamentoComCartao(Integer estado, Pedido pedido, Integer numeroDeParcelas) {
+	public PagamentoComCartao(EstadoPagamento estado, Pedido pedido, Integer numeroDeParcelas) {
 		super(estado, pedido);
 		this.numeroDeParcelas = numeroDeParcelas;
 	}

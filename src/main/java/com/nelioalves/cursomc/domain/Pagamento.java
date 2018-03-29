@@ -15,7 +15,7 @@ import com.nelioalves.cursomc.resources.Pedido;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Pagamento implements Serializable {
+public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -29,8 +29,8 @@ public class Pagamento implements Serializable {
 	public Pagamento() {
 	}
 
-	public Pagamento(Integer estado, Pedido pedido) {
-		this.estado = estado;
+	public Pagamento(EstadoPagamento estado, Pedido pedido) {
+		this.estado = estado.getCodigo();
 		this.pedido = pedido;
 	}
 	
@@ -46,8 +46,8 @@ public class Pagamento implements Serializable {
 		return EstadoPagamento.toEnum(estado);
 	}
 	
-	public void setEstadoPagamento(Integer estado) {
-		this.estado = estado;
+	public void setEstadoPagamento(EstadoPagamento estado) {
+		this.estado = estado.getCodigo();
 	}
 
 	public Pedido getPedido() {
