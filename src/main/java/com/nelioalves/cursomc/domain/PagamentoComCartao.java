@@ -3,7 +3,6 @@ package com.nelioalves.cursomc.domain;
 import javax.persistence.Entity;
 
 import com.nelioalves.cursomc.enums.EstadoPagamento;
-import com.nelioalves.cursomc.resources.Pedido;
 
 @Entity
 public class PagamentoComCartao extends Pagamento {

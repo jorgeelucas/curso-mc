@@ -18,6 +18,7 @@ import com.nelioalves.cursomc.domain.ItemPedido;
 import com.nelioalves.cursomc.domain.Pagamento;
 import com.nelioalves.cursomc.domain.PagamentoComBoleto;
 import com.nelioalves.cursomc.domain.PagamentoComCartao;
+import com.nelioalves.cursomc.domain.Pedido;
 import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.domain.builder.ProdutoBuilder;
 import com.nelioalves.cursomc.enums.EstadoPagamento;
@@ -31,7 +32,6 @@ import com.nelioalves.cursomc.repositories.ItemPedidoRepository;
 import com.nelioalves.cursomc.repositories.PagamentoRepository;
 import com.nelioalves.cursomc.repositories.PedidoRepository;
 import com.nelioalves.cursomc.repositories.ProdutoRepository;
-import com.nelioalves.cursomc.resources.Pedido;
 
 @SpringBootApplication
 public class CursomvApplication implements CommandLineRunner {
