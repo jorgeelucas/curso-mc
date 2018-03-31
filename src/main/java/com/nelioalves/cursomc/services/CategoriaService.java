@@ -21,4 +21,9 @@ public class CategoriaService {
 				() -> new ObjectNotFoundException(Categoria.class.getName() + " de id: " + id + " não encontrado!"));
 	}
 
+	public Categoria cadastrar(Categoria categoria) {
+		categoria.setId(null);
+		return repo.save(categoria);
+	}
+
 }
