@@ -75,6 +75,17 @@ public class CursomvApplication implements CommandLineRunner {
 	public void cargaInicial() throws ParseException {
 		Categoria informatica = new Categoria(null, "Informática");
 		Categoria escritorio = new Categoria(null, "Escritório");
+		Categoria cat1 = new Categoria(null, "Jardinagem");
+		Categoria cat2 = new Categoria(null, "Cozinha");
+		Categoria cat3 = new Categoria(null, "Casa");
+		Categoria cat4 = new Categoria(null, "Banheiro");
+		Categoria cat5 = new Categoria(null, "Carro");
+		Categoria cat6 = new Categoria(null, "Imovel");
+		Categoria cat7 = new Categoria(null, "Roupas");
+		Categoria cat8 = new Categoria(null, "Cidade");
+		Categoria cat9 = new Categoria(null, "Teste");
+		Categoria cat10 = new Categoria(null, "Inhumas");
+		Categoria cat11 = new Categoria(null, "Armario");
 		
 		Produto computador = new ProdutoBuilder()
 				.comNome("Computador")
@@ -95,7 +106,7 @@ public class CursomvApplication implements CommandLineRunner {
 		
 		escritorio.setProdutos(Arrays.asList(impressora));
 		
-		categoriaRepository.saveAll(Arrays.asList(informatica, escritorio));
+		categoriaRepository.saveAll(Arrays.asList(informatica, escritorio, cat1, cat2, cat3, cat4, cat4, cat5, cat6, cat7, cat8, cat9, cat10, cat11));
 		produtoRepository.saveAll(Arrays.asList(computador, impressora, mouse));
 		
 		Estado minas = new Estado("Minas Gerais");
