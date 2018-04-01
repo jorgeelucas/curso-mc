@@ -14,6 +14,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.nelioalves.cursomc.domain.Categoria;
 import com.nelioalves.cursomc.services.CategoriaService;
 
+import javax.xml.ws.Response;
+
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResources {
@@ -38,5 +40,11 @@ public class CategoriaResources {
 	public ResponseEntity<Categoria> atualizarCategoria(@RequestBody Categoria categoria) {
 		Categoria categoriaAtualizada = service.atualizar(categoria);
 		return ResponseEntity.ok().body(categoriaAtualizada);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> deletar(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
