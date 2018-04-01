@@ -33,5 +33,10 @@ public class CategoriaResources {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+
+	@RequestMapping(value = "/atualizar", method = RequestMethod.PUT)
+	public ResponseEntity<Categoria> atualizarCategoria(@RequestBody Categoria categoria) {
+		Categoria categoriaAtualizada = service.atualizar(categoria);
+		return ResponseEntity.ok().body(categoriaAtualizada);
+	}
 }
