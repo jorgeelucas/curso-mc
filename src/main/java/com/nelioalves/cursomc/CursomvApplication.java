@@ -123,12 +123,13 @@ public class CursomvApplication implements CommandLineRunner {
 		cidadeRepository.saveAll(Arrays.asList(uberlandia, spCidade, campinas));
 		
 		Cliente mariaSilva = new Cliente("Maria Silva", "maria@gmail.com", "3637912377", TipoCliente.PESSOAFISICA);
-		mariaSilva.getTelefones().addAll(Arrays.asList("61992924768", "6199998888"));
+		mariaSilva.addTelefones("61992924768", "6199998888");
 		
 		Endereco endereco1 = new Endereco("Rua Flores", "300", "apt 303", "jardim", "38220834", mariaSilva, uberlandia);
 		Endereco endereco2 = new Endereco("Avenida Matos", "105", "sala 800", "centro", "38777012", mariaSilva, spCidade);		
 		
-		mariaSilva.getEnderecos().addAll(Arrays.asList(endereco1, endereco2));
+		mariaSilva.addEndereco(endereco1);
+		mariaSilva.addEndereco(endereco2);
 		
 		clienteRepository.saveAll(Arrays.asList(mariaSilva));
 		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));

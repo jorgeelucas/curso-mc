@@ -15,6 +15,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.h2.util.StringUtils;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nelioalves.cursomc.enums.TipoCliente;
 
@@ -96,7 +98,11 @@ public class Cliente implements Serializable {
 	}
 
 	public List<Endereco> getEnderecos() {
-		return enderecos;
+		return Collections.unmodifiableList(enderecos);
+	}
+	
+	public void addEndereco(Endereco endereco) {
+		this.enderecos.add(endereco);
 	}
 
 	public void setEnderecos(List<Endereco> enderecos) {
@@ -104,7 +110,15 @@ public class Cliente implements Serializable {
 	}
 
 	public Set<String> getTelefones() {
-		return telefones;
+		return Collections.unmodifiableSet(telefones);
+	}
+	
+	public void addTelefones(String... telefones) {
+		for (String telefone : telefones) {
+			if (!StringUtils.isNullOrEmpty(telefone)) {
+				this.telefones.add(telefone);
+			}
+		}
 	}
 
 	public void setTelefones(Set<String> telefones) {
