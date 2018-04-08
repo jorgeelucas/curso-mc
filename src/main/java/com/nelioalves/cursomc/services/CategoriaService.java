@@ -35,8 +35,9 @@ public class CategoriaService {
 	}
 
     public Categoria atualizar(Categoria categoria) {
-		obterPorId(categoria.getId());
-		return repo.save(categoria);
+		Categoria categoriaGerenciada = obterPorId(categoria.getId());
+		atualizarCategoria(categoriaGerenciada, categoria);
+		return repo.save(categoriaGerenciada);
     }
 
 	public void delete(Integer id) {
@@ -58,5 +59,9 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO dto) {
 		return new Categoria(dto.getId(), dto.getNome());
+	}
+	
+	private void atualizarCategoria(Categoria categoriaGerenciada, Categoria categoria) {
+		categoriaGerenciada.setNome(categoria.getNome());
 	}
 }
