@@ -36,7 +36,7 @@ public class ClienteResources {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insertClient(@RequestBody ClienteNewDTO dto) {
+	public ResponseEntity<Void> insertClient(@Valid @RequestBody ClienteNewDTO dto) {
 		Cliente cli = clienteService.fromDTO(dto);
 		Cliente cliente = clienteService.inserir(cli);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri();
