@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -99,6 +100,14 @@ public class Pedido implements Serializable {
 		for (ItemPedido itemPedido : itemPedidos) {
 			itens.add(itemPedido);
 		}
+	}
+	
+	public Double getValorTotal() {
+		Double total = 0.0;
+		for (ItemPedido itemPedido : itens) {
+			total+=itemPedido.getSubTotal();
+		}
+		return total;
 	}
 
 	@Override
