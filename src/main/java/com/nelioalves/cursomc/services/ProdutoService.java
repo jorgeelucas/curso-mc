@@ -12,6 +12,7 @@ import com.nelioalves.cursomc.domain.Categoria;
 import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
 import com.nelioalves.cursomc.repositories.ProdutoRepository;
+import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ProdutoService {
@@ -21,6 +22,11 @@ public class ProdutoService {
 	
 	@Autowired
 	private CategoriaRepository categoriaRepository;
+	
+	public Produto obterPorId(Integer id) {
+		return produtoRepository.findById(id).orElseThrow(() -> 
+		new ObjectNotFoundException("Produto" + " de id " + id + " não encontrado"));
+	}
 	
 	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy, String directions) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(directions), orderBy);
