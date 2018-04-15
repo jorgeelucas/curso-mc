@@ -102,12 +102,30 @@ public class CursomvApplication implements CommandLineRunner {
 				.comPreco(80.00)
 				.comCategorias(Arrays.asList(informatica)).build();
 		
+		Produto porta = new ProdutoBuilder()
+				.comNome("Porta")
+				.comPreco(120.0)
+				.comCategorias(Arrays.asList(cat3)).build();
+		Produto janela = new ProdutoBuilder()
+				.comNome("Janela")
+				.comPreco(75.00)
+				.comCategorias(Arrays.asList(cat3)).build();
+		Produto rastelo = new ProdutoBuilder()
+				.comNome("Rastelo")
+				.comPreco(27.5)
+				.comCategorias(Arrays.asList(cat1)).build();
+		
 		informatica.setProdutos(Arrays.asList(computador, impressora, mouse));
 		
 		escritorio.setProdutos(Arrays.asList(impressora));
 		
+		cat3.setProdutos(Arrays.asList(porta));
+		cat3.setProdutos(Arrays.asList(janela));
+		
+		cat1.setProdutos(Arrays.asList(rastelo));
+		
 		categoriaRepository.saveAll(Arrays.asList(informatica, escritorio, cat1, cat2, cat3, cat4, cat4, cat5, cat6, cat7, cat8, cat9, cat10, cat11));
-		produtoRepository.saveAll(Arrays.asList(computador, impressora, mouse));
+		produtoRepository.saveAll(Arrays.asList(computador, impressora, mouse, porta, janela, rastelo));
 		
 		Estado minas = new Estado("Minas Gerais");
 		Estado spEstado = new Estado("São Paulo");
