@@ -17,7 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import org.h2.util.StringUtils;
+import org.springframework.util.StringUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nelioalves.cursomc.enums.TipoCliente;
@@ -119,7 +119,7 @@ public class Cliente implements Serializable {
 	
 	public void addTelefones(String... telefones) {
 		for (String telefone : telefones) {
-			if (!StringUtils.isNullOrEmpty(telefone)) {
+			if (!StringUtils.isEmpty(telefone)) {
 				this.telefones.add(telefone);
 			}
 		}
