@@ -64,7 +64,7 @@ public class PedidoService {
 			itemPedido.setPreco(itemPedido.getProduto().getPreco());
 		}
 		itemPedidoRepository.saveAll(pedido.getItens());
-		emailService.sendOrderConfirmationEmail(pedido);
+		emailService.sendOrderConfirmationHtmlEmail(pedido);
 		return pedido;
 	}
 }
