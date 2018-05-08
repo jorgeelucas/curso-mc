@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nelioalves.cursomc.domain.Categoria;
@@ -18,6 +19,7 @@ import com.nelioalves.cursomc.domain.PagamentoComBoleto;
 import com.nelioalves.cursomc.domain.PagamentoComCartao;
 import com.nelioalves.cursomc.domain.Pedido;
 import com.nelioalves.cursomc.domain.Produto;
+import com.nelioalves.cursomc.domain.builder.ClienteBuilder;
 import com.nelioalves.cursomc.domain.builder.ProdutoBuilder;
 import com.nelioalves.cursomc.enums.EstadoPagamento;
 import com.nelioalves.cursomc.enums.TipoCliente;
@@ -33,6 +35,9 @@ import com.nelioalves.cursomc.repositories.ProdutoRepository;
 
 @Service
 public class DBService {
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
@@ -134,7 +139,13 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(minas, spEstado));
 		cidadeRepository.saveAll(Arrays.asList(uberlandia, spCidade, campinas));
 		
-		Cliente mariaSilva = new Cliente("Maria Silva", "jorge.lucas.14@gmail.com", "3637912377", TipoCliente.PESSOAFISICA);
+		Cliente mariaSilva = new ClienteBuilder()
+				.comNome("Maria Silva")
+				.comEmail("jorge.lucas.14@gmail.com")
+				.comCpfOuCnpj("3637912377")
+				.comTipo(TipoCliente.PESSOAFISICA)
+				.comSenha(pe.encode("123"))
+				.construir();
 		mariaSilva.addTelefones("61992924768", "6199998888");
 		
 		Endereco endereco1 = new Endereco("Rua Flores", "300", "apt 303", "jardim", "38220834", mariaSilva, uberlandia);

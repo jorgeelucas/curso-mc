@@ -24,6 +24,9 @@ public class ClienteNewDTO implements Serializable {
 	private Integer tipo;
 	
 	@NotBlank
+	private String senha;
+	
+	@NotBlank
 	private String logradouro;
 	@NotBlank
 	private String numero;
@@ -70,6 +73,14 @@ public class ClienteNewDTO implements Serializable {
 
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public String getLogradouro() {
