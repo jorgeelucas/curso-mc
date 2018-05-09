@@ -3,12 +3,10 @@ package com.nelioalves.cursomc.domain.builder;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import com.nelioalves.cursomc.domain.Cliente;
 import com.nelioalves.cursomc.domain.Endereco;
 import com.nelioalves.cursomc.domain.Pedido;
+import com.nelioalves.cursomc.enums.Perfil;
 import com.nelioalves.cursomc.enums.TipoCliente;
 
 public class ClienteBuilder {
@@ -70,6 +68,11 @@ public class ClienteBuilder {
 	
 	public ClienteBuilder comPedidos(List<Pedido> pedidos) {
 		this.cliente.setPedidos(pedidos);
+		return this;
+	}
+
+	public ClienteBuilder comPerfil(Perfil perfil) {
+		this.cliente.addPerfil(perfil);
 		return this;
 	}
 	

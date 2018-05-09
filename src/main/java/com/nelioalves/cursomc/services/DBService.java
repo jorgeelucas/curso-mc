@@ -22,6 +22,7 @@ import com.nelioalves.cursomc.domain.Produto;
 import com.nelioalves.cursomc.domain.builder.ClienteBuilder;
 import com.nelioalves.cursomc.domain.builder.ProdutoBuilder;
 import com.nelioalves.cursomc.enums.EstadoPagamento;
+import com.nelioalves.cursomc.enums.Perfil;
 import com.nelioalves.cursomc.enums.TipoCliente;
 import com.nelioalves.cursomc.repositories.CategoriaRepository;
 import com.nelioalves.cursomc.repositories.CidadeRepository;
@@ -146,16 +147,30 @@ public class DBService {
 				.comTipo(TipoCliente.PESSOAFISICA)
 				.comSenha(pe.encode("123"))
 				.construir();
-		mariaSilva.addTelefones("61992924768", "6199998888");
+		mariaSilva.addTelefones("61992929292", "6199998888");
+		
+		Cliente joao = new ClienteBuilder()
+		.comNome("Joao Jose")
+		.comEmail("joao.jose@gmail.com")
+		.comCpfOuCnpj("43654283063")
+		.comTipo(TipoCliente.PESSOAFISICA)
+		.comSenha(pe.encode("2345678"))
+		.comPerfil(Perfil.ADMIN)
+		.construir();
+		joao.addTelefones("61993939393", "6133995566");
 		
 		Endereco endereco1 = new Endereco("Rua Flores", "300", "apt 303", "jardim", "38220834", mariaSilva, uberlandia);
 		Endereco endereco2 = new Endereco("Avenida Matos", "105", "sala 800", "centro", "38777012", mariaSilva, spCidade);		
 		
+		Endereco endereco3 = new Endereco("Jardins", "233", "Casa 10", "Alphaville", "72888888", joao, spCidade);
+		
 		mariaSilva.addEndereco(endereco1);
 		mariaSilva.addEndereco(endereco2);
 		
-		clienteRepository.saveAll(Arrays.asList(mariaSilva));
-		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2));
+		joao.addEndereco(endereco3);
+		
+		clienteRepository.saveAll(Arrays.asList(mariaSilva, joao));
+		enderecoRepository.saveAll(Arrays.asList(endereco1, endereco2, endereco3));
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 		
